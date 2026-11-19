@@ -5,7 +5,7 @@
 import { symbols } from "mc-periodic-table";
 import { useEffect, useRef } from "react";
 
-export default function PeriodicTable({ enabled, onChange }) {
+export default function PeriodicTable({ enabled, selected = [], onChange }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -41,6 +41,17 @@ export default function PeriodicTable({ enabled, onChange }) {
       if (symbols[z]) pt.setCellInteraction([z], allowed.has(symbols[z]) ? "normal" : "noInteractive");
     }
   }, [enabled]);
+
+  // a selection set from outside (e.g. cleared): redraw the cells
+  useEffect(() => {
+    const pt = ref.current;
+    const current = Object.entries(pt.getState())
+      .filter(([, state]) => state > 0)
+      .map(([z]) => symbols[Number(z)]);
+    if ([...current].sort().join() !== [...selected].sort().join()) {
+      pt.setState(Object.fromEntries(selected.map((s) => [symbols.indexOf(s), 1])));
+    }
+  }, [selected]);
 
   return (
     <div className="flex w-full justify-center pb-8">

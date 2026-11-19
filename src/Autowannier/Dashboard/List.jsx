@@ -1,26 +1,43 @@
-// selectionlist.html: the table of all compounds (a DataTable with a formula
-// search in the old page); a row opens the compound.
 import { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 
 import { CompoundName } from "../Common.jsx";
-import { tableRows } from "../data.js";
+import { sortTable, tableRows } from "../data.js";
 
 const th = "border-b border-gray-300 px-2 py-1";
+
+/** a column heading that sorts the table by its column (again: the other way) */
+function SortHeading({ column, sort, onSort, className = "", children }) {
+  const active = sort.column === column;
+  return (
+    <th className={`${th} ${className}`} aria-sort={active ? (sort.ascending ? "ascending" : "descending") : "none"}>
+      <button type="button" className="cursor-pointer whitespace-nowrap hover:text-[#337ab7]" onClick={() => onSort(column)}>
+        {children}
+        <span className="ml-1 inline-block w-3 text-xs">{active ? (sort.ascending ? "▲" : "▼") : ""}</span>
+      </button>
+    </th>
+  );
+}
 
 export default function CompoundsList() {
   const { table_data } = useOutletContext();
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
-  const rows = tableRows(table_data).filter((r) =>
+  // by formula until another heading is clicked
+  const [sort, setSort] = useState({ column: 0, ascending: true });
+  const onSort = (column) =>
+    setSort((s) => ({ column, ascending: s.column === column ? !s.ascending : true }));
+  const sorted = sortTable(table_data, sort.column, sort.ascending);
+  const rows = tableRows(sorted).filter((r) =>
     r.compound.toLowerCase().includes(search.trim().toLowerCase()),
   );
 
   return (
     <div className="space-y-2">
       <p>
-        Table with values of the average bands distance η, max bands distance η<sub>max</sub> and total spread Ω
-        for the suggested k-point linear density of 0.2 Å<sup>-1</sup>.
+        Table with values of the average bands distance η, max bands distance η
+        <sub>max</sub> and total spread Ω for the suggested k-point linear
+        density of 0.2 Å<sup>-1</sup>.
       </p>
       <input
         type="text"
@@ -42,10 +59,15 @@ export default function CompoundsList() {
               </th>
             </tr>
             <tr>
-              <th className={`${th} text-left`}>Formula</th>
-              <th className={`${th} text-left`}>Band manifold</th>
-              {[0, 1].map((i) => (
-                <Metrics key={i} />
+              <SortHeading column={0} sort={sort} onSort={onSort} className="text-left">
+                Formula
+              </SortHeading>
+              <SortHeading column={1} sort={sort} onSort={onSort} className="text-left">
+                Band manifold
+              </SortHeading>
+              {/* columns 2-4: SCDM only, 5-7: SCDM+MLWF */}
+              {[2, 5].map((first) => (
+                <Metrics key={first} first={first} sort={sort} onSort={onSort} />
               ))}
             </tr>
           </thead>
@@ -54,7 +76,9 @@ export default function CompoundsList() {
               <tr
                 key={i}
                 className="cursor-pointer border-b border-gray-100 hover:bg-gray-100"
-                onClick={() => navigate(`/details/${encodeURIComponent(r.compound)}`)}
+                onClick={() =>
+                  navigate(`/details/${encodeURIComponent(r.compound)}`)
+                }
               >
                 <td className="px-2 py-1 text-left">
                   <CompoundName compound={r.compound} />
@@ -74,16 +98,18 @@ export default function CompoundsList() {
   );
 }
 
-function Metrics() {
+function Metrics({ first, sort, onSort }) {
   return (
     <>
-      <th className={th}>η (meV)</th>
-      <th className={th}>
+      <SortHeading column={first} sort={sort} onSort={onSort}>
+        η (meV)
+      </SortHeading>
+      <SortHeading column={first + 1} sort={sort} onSort={onSort}>
         η<sub>max</sub> (meV)
-      </th>
-      <th className={th}>
+      </SortHeading>
+      <SortHeading column={first + 2} sort={sort} onSort={onSort}>
         Ω (Å<sup>2</sup>)
-      </th>
+      </SortHeading>
     </>
   );
 }

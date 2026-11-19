@@ -60,6 +60,21 @@ export function elementsOfAll(compounds) {
 //  SCDM-only eta, eta_max, total_spread, SCDM+MLWF eta, eta_max, total_spread]
 
 /** the rows of the list view (eta in meV) */
+/**
+ * table_data sorted by column `column` (0 formula, 1 manifold: text; 2-7
+ * numbers), ascending or not; missing values (null) last either way, ties in
+ * table order.
+ */
+export function sortTable(tableData, column, ascending = true) {
+  const sign = ascending ? 1 : -1;
+  return [...tableData].sort((a, b) => {
+    const x = a[column];
+    const y = b[column];
+    if (x == null || y == null) return (x == null) - (y == null);
+    return sign * (typeof x === "number" ? x - y : String(x).localeCompare(String(y)));
+  });
+}
+
 export function tableRows(tableData) {
   return tableData.map((r) => ({
     compound: r[0],

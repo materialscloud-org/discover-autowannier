@@ -11,6 +11,7 @@ import {
   elementsOf,
   elementsOfAll,
   fromFermi,
+  sortTable,
   propertiesSummary,
   scaled,
   scatterSeries,
@@ -138,4 +139,18 @@ test("fromFermi: energies from the Fermi energy, everything else kept", () => {
   real.paths.forEach((p, i) =>
     p.values.forEach((band, b) => band.forEach((e, k) => assert.equal(e, bands.paths[i].values[b][k] - 5))),
   );
+});
+
+test("sortTable: numbers and text, both directions, missing values last", () => {
+  const t = [
+    ["B", "Entangled", 2, 0, 0, 0, 0, 0],
+    ["a", "Isolated", null, 0, 0, 0, 0, 0],
+    ["C", "Entangled", 1, 0, 0, 0, 0, 0],
+  ];
+  const names = (rows) => rows.map((r) => r[0]);
+  assert.deepEqual(names(sortTable(t, 2)), ["C", "B", "a"]);
+  assert.deepEqual(names(sortTable(t, 2, false)), ["B", "C", "a"]); // null still last
+  assert.deepEqual(names(sortTable(t, 0)), ["a", "B", "C"]); // text, case-insensitive order
+  assert.deepEqual(names(sortTable(t, 1, false)), ["a", "B", "C"]); // ties keep table order
+  assert.deepEqual(names(t), ["B", "a", "C"]); // input unchanged
 });
