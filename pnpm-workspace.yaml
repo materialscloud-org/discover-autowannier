@@ -1,0 +1,15 @@
+allowBuilds:
+  esbuild: true
+minimumReleaseAgeExclude:
+  - matsci-parse
+  - mc-react-header
+  - mc-react-library
+# bands-visualiser asks for plotly 3; the app uses plotly 4 (same API): one copy
+overrides:
+  bands-visualiser>plotly.js-basic-dist-min: ^4.3.0
+patchedDependencies:
+  mc-react-structure-visualizer@0.11.1: patches/mc-react-structure-visualizer@0.11.1.patch
+# matsci-parse imports moyo-wasm, which vite.config excludes from pre-bundling.
+# Vite resolves that import from the app root, so link it there too.
+publicHoistPattern:
+  - "@spglib/moyo-wasm"

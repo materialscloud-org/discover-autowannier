@@ -1,0 +1,51 @@
+.scdm-structure-attributes {
+  .panel-title {
+    text-align: center;
+  }
+}
+
+.manifold-section {
+  color: #c62828;
+
+  .key {
+    color: #c62828 !important;
+  }
+}
+
+.scdm-plot-container {
+  text-align: center;
+
+  .band-tab-container {
+    border-bottom: 1px solid rgba(221,221,221,.89) !important;
+
+    li {
+      border: solid transparent;
+      border-width: 3px 1px 1px;
+      border-radius: 3px 3px 0 0;
+      float: left;
+      color: #586069;
+      white-space: nowrap;
+    }
+
+    li.active {
+      background-color: #fff;
+      color: #24292e;
+      border-color: #e36209 #ccc white;
+    }
+  }
+
+  .add-max-width {
+    min-width: 300px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .tab-content {
+    padding: 25px;
+  }
+
+  canvas {
+    height: 350px !important;
+  }
+}
+

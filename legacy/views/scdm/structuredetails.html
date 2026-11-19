@@ -1,0 +1,455 @@
+
+<div class="structures2d" id="topLocation">
+
+    <div class="rest-url">
+        <a class="btn btn-primary btn-sm" target="_blank" ng-href="{{compoundDetailsRestUrl}}">Get data from REST API</a>
+    </div>
+
+    <div class="page-subtitle">
+        <h2>Compound: <span compile="compoundDisplayName"></span></h2>
+    </div>
+
+    <div ng-show="compoundDataLoading" class="spinner-div">
+        <img src="images/mcloud_spinner.svg" class="spinner-icon">
+    </div>
+
+    <div ng-hide="compoundDataLoading">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-1"></div>
+                <div class="col-sm-12 col-md-6 col-lg-5">
+                    <div jsmol-viz
+                         crystal-xsf = "crystalXsf"
+                         structure-viewer="structureViewer"
+                         jsmol-applet-name="jsmolAppletName"
+                         supercell="supercell"
+                         div-id="crystal2d"
+                         parent-div-id="structure2d-content"
+                         download-options="downloadOptions"
+                         toggle-str-vis-interaction="toggleStrVisInteraction()">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-5">
+
+                    <!------ 2D structure info and properties------->
+                    <div class="panel-group compound-properties" style="width: 100%">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" style="padding-bottom: 7px; padding-top: 4px;">
+                                <h3 class="panel-title">
+                                    Info and properties
+                                </h3>
+                                <span>Values for linear k-point spacing of 0.2 &#8491;<sup>-1</sup></span>
+                            </div>
+                            <div class="panel-body">
+                                <div>
+                                    <div ng-if="getDictLength(valenceOnly) > 0">
+                                        <h4>
+                                            <div class="property manifold-section">
+                                                <div class="key"><span compile="valenceOnly.key"></span>:</div>
+                                                <div class="value" compile="valenceOnly.value"></div>
+                                            </div>
+                                        </h4>
+                                        <div ng-repeat="method in valenceOnly.children">
+                                            <h5>
+                                                <div class="property">
+                                                    <div class="key"><span compile="method.key"></span>:</div>
+                                                    <div class="value" compile="method.value"></div>
+                                                </div>
+                                            </h5>
+                                            <div style="padding-left: 25px;">
+                                                <div ng-repeat="mdata in method.children">
+                                                    <div class="property">
+                                                        <div class="key"><span compile="mdata.key"></span>:</div>
+                                                        <div class="value" compile="mdata.value"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <div ng-if="getDictLength(withConduction) > 0">
+                                        <h4>
+                                            <div class="property manifold-section">
+                                                <div class="key"><span compile="withConduction.key"></span>:</div>
+                                                <div class="value" compile="withConduction.value"></div>
+                                            </div>
+                                        </h4>
+                                        <div ng-repeat="method in withConduction.children">
+                                            <h5>
+                                                <div class="property">
+                                                    <div class="key"><span compile="method.key"></span>:</div>
+                                                    <div class="value" compile="method.value"></div>
+                                                </div>
+                                            </h5>
+                                            <div style="padding-left: 25px;">
+                                                <div ng-repeat="mdata in method.children">
+                                                    <div class="property">
+                                                        <div class="key"><span compile="mdata.key"></span>:</div>
+                                                        <div class="value" compile="mdata.value"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <!------ 2D structure attributes ------->
+                    <div class="scdm-structure-attributes">
+
+                        <div ng-show="structure2dAttributesLoading" class="spinner-div">
+                            <img src="images/mcloud_spinner.svg" class="spinner-icon">
+                        </div>
+
+                        <div ng-hide="structure2dAttributesLoading">
+                            <div>
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <span style="display: inline-block">Structure cell vectors</span>
+                                        <div class="picture">
+                                            <span>
+                                                <a href="{{structure2dInfo.link}}">
+                                                    <img src="images/aiida-logo-128.png">
+                                                    <md-tooltip md-direction="'right'" class="tooltip-multiline" compile="structure2dInfo.linkTooltip">
+                                                    </md-tooltip>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </h3>
+                                </div>
+
+                                <table class="table attribute-table numbers-font-family">
+                                    <thead>
+                                    <tr>
+                                        <th ng-repeat="hname in ['', 'x[&#8491;]', 'y[&#8491;]', 'z[&#8491;]']">{{hname}}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="scell in structure2dInfo.attributes.cell track by $index">
+                                        <th scope="row">v<sub>{{$index + 1}}</sub></th>
+                                        <td ng-repeat="value in scell track by $index">{{value.toFixed(6)}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="scdm-structure-attributes">
+
+                        <div ng-show="structure2dAttributesLoading" class="spinner-div">
+                            <img src="images/mcloud_spinner.svg" class="spinner-icon">
+                        </div>
+
+                        <div ng-hide="structure2dAttributesLoading">
+                            <div>
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <span style="display: inline-block">Structure atomic coordinates</span>
+                                        <div class="picture">
+                                            <span>
+                                                <a href="{{structure2dInfo.link}}">
+                                                    <img src="images/aiida-logo-128.png">
+                                                    <md-tooltip md-direction="'right'" class="tooltip-multiline" compile="structure2dInfo.linkTooltip">
+                                                    </md-tooltip>
+                                                </a>
+                                            </span>
+                                        </div>
+                                    </h3>
+                                </div>
+                                <table class="table attribute-table numbers-font-family">
+                                    <thead>
+                                    <tr>
+                                        <th ng-repeat="hname in ['Kind label', 'x[&#8491;]', 'y[&#8491;]', 'z[&#8491;]']">{{hname}}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="site in structure2dInfo.attributes.sites">
+                                        <th scope="row">
+                                            <md-tooltip class="tooltip-multiline">
+                                                        <span ng-repeat="kind in structure2dInfo.attributes.kinds" ng-if="kind.name == site.kind_name">
+                                                            Mass: {{kind.mass}} a.m.u.
+                                                            <br>
+                                                            <span ng-if="kind.symbols.length == 1">Element: {{kind.symbols[0]}}</span>
+                                                            <span ng-if="kind.symbols.length > 1">Elements:
+                                                                <span ng-repeat="symbol in kind.symbols">
+                                                                    {{symbol}}
+                                                                    <span ng-if="$index == kind.symbols.length-1">,</span>
+                                                                </span>
+                                                            </span>
+                                                        </span>
+                                            </md-tooltip>
+                                            {{site.kind_name}}
+                                        </th>
+                                        <td ng-repeat="value in site.position track by $index">{{value.toFixed(6)}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="valence-only-plot-container scdm-plot-container" ng-if="displayValenceOnlyBandPlots == true">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+
+                        <div class="band-plot-container">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">
+                                    Band manifold: {{ MANIFOLD_NAME_MAPPING.valence_only }}
+                                </h3>
+                            </div>
+
+                            <ul class="nav nav-tabs band-tab-container">
+                                <li ng-repeat="method in bandTabJson.valence_only.tabJson" ng-class="method.isDisplay === true? 'active':''">
+                                    <a href ng-click="toggleImageTab('valence_only', method.key, method.id, bandTabJson.valence_only.defaultMeshIdx[method.id])">{{method.label}}</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div>
+                                    <p style="text-align: left;">Linear k-point spacing (&#8491;<sup>-1</sup>)</p>
+                                </div>
+                                <div ng-repeat="method in bandTabJson.valence_only.tabJson" ng-show="method.isDisplay === true">
+                                    <div class="mesh-tab-container">
+                                        <ul class="nav nav-tabs band-tab-container">
+                                            <li ng-repeat="mesh in method.children" ng-class="mesh.isDisplay === true? 'active':''">
+                                                <a href ng-click="toggleImageTab('valence_only', mesh.key, method.id, mesh.id)">{{mesh.label}}</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div ng-repeat="mesh in method.children" ng-show="mesh.isDisplay === true">
+                                                <div id="valenceOnlyBandContainer">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="add-max-width">
+                                                                <div ng-show="valenceOnlyBandDataLoading" class="spinner-div" style="height: 400px;">
+                                                                    <img src="images/mcloud_spinner.svg" class="spinner-icon">
+                                                                </div>
+
+                                                                <div ng-hide="valenceOnlyBandDataLoading">
+                                                                    <div class="plot-title">
+                                                                        <div>
+                                                                            <span>DFT</span>
+                                                                            <div class="picture" ng-if="DFTBandLink.length > 0">
+                                                                                <span>
+                                                                                    <a href="{{DFTBandLink}}">
+                                                                                        <img src="images/aiida-logo-128.png">
+                                                                                        <md-tooltip md-direction="'right'" class="tooltip-multiline" compile="DFTBandLinkTooltip">
+                                                                                        </md-tooltip>
+                                                                                    </a>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span> (dark grey) vs. Wannier-interpolated </span>
+                                                                            <div class="picture" ng-if="bandInfoValenceOnlyLink.length > 0">
+                                                                                <span>
+                                                                                    <a href="{{bandInfoValenceOnlyLink}}">
+                                                                                        <img src="images/aiida-logo-128.png">
+                                                                                        <md-tooltip md-direction="'right'" class="tooltip-multiline" compile="bandInfoValenceOnlyLinkTooltip">
+                                                                                        </md-tooltip>
+                                                                                    </a>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span> (dark red). </span>
+                                                                        </div>
+                                                                        <div><span>The zero of energy is set at the value of the Fermi energy returned by Quantum ESPRESSO.</span></div>
+                                                                        <div><span compile="bandInfoValenceOnlySubTitle"></span></div>
+                                                                    </div>
+                                                                    <div class="plot-diagram">
+                                                                        <div>
+                                                                            <canvas id="{{ method.id + '_' + mesh.id + '_' + 'vonlyBand' }}">
+                                                                            </canvas>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p class="input-group input-group-div">
+                                                                                <span class="input-group-addon">Edit the path: </span>
+                                                                                <input id="{{ method.id + '_' + mesh.id + '_' + 'vonlyBandPathTextBox' }}" class="input-group form-control input-path"
+                                                                                       autocomplete="off" ng-keyup="changeBandPath('valence_only', method.id, mesh.id, 'bandInfo')">
+                                                                            </p>
+                                                                            <div class="btn-group band-control" role="group" aria-label="zoom-pan-mode">
+                                                                                <button type="button" class="btn btn-primary"
+                                                                                        id="valence_only_{{ method.id }}_{{ mesh.id }}_zoombtn"
+                                                                                        ng-click="dragToZoom('valence_only', method.id, mesh.id, 'bandInfo')">
+                                                                                    Drag (or pinch) to zoom
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-default"
+                                                                                        id="valence_only_{{ method.id }}_{{ mesh.id }}_panbtn"
+                                                                                        ng-click="dragToPan('valence_only', method.id, mesh.id, 'bandInfo')">
+                                                                                    Drag to pan
+                                                                                </button>
+                                                                            </div>
+                                                                            <button type="button" class="btn btn-primary btn-md band-control" title="Reset zoom"
+                                                                                    ng-click="resetZoomPan('valence_only', method.id, mesh.id, 'bandInfo')">
+                                                                                Reset zoom/pan
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-primary btn-md band-control" title="Reset to default path"
+                                                                                    ng-click="resetDefaultBandPath('valence_only', method.id, mesh.id, 'bandInfo')">
+                                                                                Reset default path
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="with-conduction-plot-container scdm-plot-container" ng-if="displaywithConductionBandPlots == true">
+                <hr>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                Band manifold: {{ MANIFOLD_NAME_MAPPING.with_conduction }}
+                            </h3>
+                        </div>
+
+                        <div class="band-plot-container">
+
+                            <ul class="nav nav-tabs band-tab-container">
+                                <li ng-repeat="method in bandTabJson.with_conduction.tabJson" ng-class="method.isDisplay === true? 'active':''">
+                                    <a href ng-click="toggleImageTab('with_conduction', method.key, method.id, bandTabJson.with_conduction.defaultMeshIdx[method.id])">{{method.label}}</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div>
+                                    <p style="text-align: left;">Linear k-point spacing (&#8491;<sup>-1</sup>)</p>
+                                </div>
+                                <div ng-repeat="method in bandTabJson.with_conduction.tabJson" ng-show="method.isDisplay === true">
+                                    <div class="mesh-tab-container">
+                                        <ul class="nav nav-tabs band-tab-container">
+                                            <li ng-repeat="mesh in method.children" ng-class="mesh.isDisplay === true? 'active':''">
+                                                <a href ng-click="toggleImageTab('with_conduction', mesh.key, method.id, mesh.id)">{{mesh.label}}</a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div ng-repeat="mesh in method.children" ng-show="mesh.isDisplay === true">
+                                                <div id="withConductionBandContainer">
+                                                    <div class="row">
+                                                        <div class="col-sm-12 col-md-12">
+                                                            <div class="add-max-width">
+                                                                <div ng-show="withConductionBandDataLoading" class="spinner-div" style="height: 400px;">
+                                                                    <img src="images/mcloud_spinner.svg" class="spinner-icon">
+                                                                </div>
+
+                                                                <div ng-hide="withConductionBandDataLoading">
+                                                                    <div class="plot-title">
+                                                                        <div>
+                                                                            <span>DFT</span>
+                                                                            <div class="picture" ng-if="DFTBandLink.length > 0">
+                                                                                <span>
+                                                                                    <a href="{{DFTBandLink}}">
+                                                                                        <img src="images/aiida-logo-128.png">
+                                                                                        <md-tooltip md-direction="'right'" class="tooltip-multiline" compile="DFTBandLinkTooltip">
+                                                                                        </md-tooltip>
+                                                                                    </a>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span> (dark grey) vs. Wannier-interpolated </span>
+                                                                            <div class="picture" ng-if="bandInfoWithConductionLink.length > 0">
+                                                                                <span>
+                                                                                    <a href="{{bandInfoWithConductionLink}}">
+                                                                                        <img src="images/aiida-logo-128.png">
+                                                                                        <md-tooltip md-direction="'right'" class="tooltip-multiline" compile="bandInfoWithConductionLinkTooltip">
+                                                                                        </md-tooltip>
+                                                                                    </a>
+                                                                                </span>
+                                                                            </div>
+                                                                            <span> (dark red). </span>
+                                                                        </div>
+                                                                        <div><span>The zero of energy is set at the value of the Fermi energy returned by Quantum ESPRESSO.</span></div>
+                                                                        <div><span compile="bandInfoWithConductionSubTitle"></span></div>
+                                                                    </div>
+                                                                    <div class="plot-diagram">
+                                                                        <div>
+                                                                            <canvas id="{{ method.id + '_' + mesh.id + '_' + 'withcBand' }}">
+                                                                            </canvas>
+                                                                        </div>
+                                                                        <div>
+                                                                            <p class="input-group input-group-div">
+                                                                                <span class="input-group-addon">Edit the path: </span>
+                                                                                <input id="{{ method.id + '_' + mesh.id + '_' + 'withcBandPathTextBox' }}" class="input-group form-control input-path"
+                                                                                       autocomplete="off" ng-keyup="changeBandPath('with_conduction', method.id, mesh.id, 'bandInfo')">
+                                                                            </p>
+                                                                            <div class="btn-group band-control" role="group" aria-label="zoom-pan-mode">
+                                                                                <button type="button" class="btn btn-primary"
+                                                                                        id="with_conduction_{{ method.id }}_{{ mesh.id }}_zoombtn"
+                                                                                        ng-click="dragToZoom('with_conduction', method.id, mesh.id, 'bandInfo')">
+                                                                                    Drag (or pinch) to zoom
+                                                                                </button>
+                                                                                <button type="button" class="btn btn-default"
+                                                                                        id="with_conduction_{{ method.id }}_{{ mesh.id }}_panbtn"
+                                                                                        ng-click="dragToPan('with_conduction', method.id, mesh.id, 'bandInfo')">
+                                                                                    Drag to pan
+                                                                                </button>
+                                                                            </div>
+                                                                            <button type="button" class="btn btn-primary btn-md band-control" title="Reset zoom"
+                                                                                    ng-click="resetZoomPan('with_conduction', method.id, mesh.id, 'bandInfo')">
+                                                                                Reset zoom/pan
+                                                                            </button>
+                                                                            <button type="button" class="btn btn-primary btn-md band-control" title="Reset to default path"
+                                                                                    ng-click="resetDefaultBandPath('with_conduction', method.id, mesh.id, 'bandInfo')">
+                                                                                Reset default path
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div style="margin-bottom: 50px;">
+            <md-button class="md-fab md-fab-bottom-right md-warn mdicon-btn" ng-click="scrollTop()">
+                <md-tooltip>Back to top</md-tooltip>
+                <img class="mdicon-img" src="images/md_arrow_up.png" />
+            </md-button>
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,298 @@
+/* element background colors */
+$pslibrary-1-0-0-US-background-color:         #FF0000;
+$pslibrary-1-0-0-US-low-background-color:     #FF8080;
+$pslibrary-1-0-0-PAW-background-color:        #008B00;
+$pslibrary-1-0-0-PAW-low-background-color:    #80FF80;
+$pslibrary-0-3-1-US-background-color:         #0000FF;
+$pslibrary-0-3-1-PAW-background-color:        #FF00FF;
+$GBRV-1-2-US-background-color:                #00CDCD;
+$GBRV-1-4-US-background-color:                #4682B4;
+$GBRV-1-5-US-background-color:                #B8860B;
+$SG-15-NC-background-color:                   #000000;
+$SG-15-1-1-NC-background-color:               #708090;
+$Geodecker-background-color:                  #808000;
+$Dojo-background-color:                       #FFA500;
+$THEOS-background-color:                      #D7DF01;
+$RE-Wentzcovitch-background-color:            #610B5E;
+$pslibrary-1-0-0-PAW-low-background-color:    #a8ae2b;
+$Actinides-MalteSachs-background-color:       #ea388e;
+$Vanderbilt-background-color:                 #8FBC8F;
+$THEOS2-background-color:                     #F0F000;
+$all_elec-background-color:                   #F000F0;
+$all_elec_denser-background-color:            #00F0F0;
+$BM-background-color:                         #A5FF00;
+$GIPAW-background-color:                      #B44682;
+$psorigPAW-background-color:                  #CD00CD;
+$psorigUS-background-color:                   #86B80B;
+$base-cell-background-color:                  #d4d7d7;
+
+.periodic-table-inner-container {
+  width: 100%;
+  display: table;
+}
+
+.periodic-table-search-container {
+  min-width: 150px;
+  max-width: 150px;
+  width : 20%;
+  display: table-cell;
+  position: relative;
+}
+
+.periodic-table-inner-search-container {
+  position: absolute;
+  top : 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.compound-search-input {
+  width: 100%;
+}
+
+.periodic-table-search-container .list-group {
+  height: 92%;
+  overflow: auto;
+}
+
+.periodic-table-search-container .list-group li {
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.periodic-table {
+  width: 80%;
+  position: relative;
+  max-width:1500px;
+  min-width: 500px;
+  display: table-cell;
+  padding-left: 10px;
+}
+
+.sssp-periodic-table {
+  width: 100%;
+  position: relative;
+  max-width:1680px;
+  min-width: 600px;
+  margin: 4px auto;
+}
+
+.periodic-table:after, .sssp-periodic-table:after {
+  padding-top: 50%; /*1:2 ratio*/
+  display: block;
+  content: '';
+}
+
+.periodic, .sssp-periodic {
+  height: 100%;
+  width: 100%;
+  text-shadow: none;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  position: absolute;
+}
+
+.periodic-row {
+  clear: both;
+  height: 10%;
+}
+
+.cell {
+  float: left;
+  position: relative;
+  width: 5.55%;
+  height: 100%;
+  cursor: default !important;
+}
+
+.element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 1px;
+  right: 1px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 4px rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  text-align: center;
+  pointer-events: none;
+  -webkit-transition: all 200ms ease;
+  transition: all 200ms ease;
+  background-color: rgba(0, 128, 128, 0.6);
+  border-radius: 8px;
+}
+
+.active:hover .element {
+  border-color: rgba(0, 0, 0, 0.1);
+  -webkit-transform: scale(1.2, 1.2);
+  -ms-transform: scale(1.2, 1.2);
+  transform: scale(1.2, 1.2);
+  z-index: 1;
+  background-color: rgba(0, 128, 128, 0.9);
+}
+
+.symbol {
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  right: 0px;
+  margin-top: -4px;
+  font-size: 1vw;
+  line-height: 1;
+  height: 9px;
+  color: white;
+}
+
+@media (min-width: 800px) {
+  .element {
+    right: 4px;
+    bottom: 4px;
+  }
+  .symbol {
+    margin-top: -17px;
+    font-size: 1vw;
+    font-weight: 400;
+    line-height: 30px;
+    height: 30px;
+  }
+}
+
+// @media (min-width: 1000px) {
+//   .symbol {
+//     font-size: 12px;
+//   }
+// }
+
+@media (min-width: 1200px) {
+  // .symbol {
+  //   font-size: 14px;
+  // }
+  .small-font {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 1450px) {
+  .small-font {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .symbol {
+    font-size: 18px;
+  }
+}
+
+@media (min-width: 1800px) {
+  .symbol {
+    font-size: 20px;
+  }
+}
+
+.active {
+  cursor: pointer !important;
+}
+
+.star-symbol {
+  font-size: 30px;
+  color: #676363;
+  top: 65%;
+}
+
+.u031 {
+  background-color: $pslibrary-0-3-1-US-background-color !important;
+}
+
+.p031 {
+  background-color: $pslibrary-0-3-1-PAW-background-color !important;
+}
+
+.p100 {
+  background-color: $pslibrary-1-0-0-PAW-background-color !important;
+}
+
+.u100 {
+  background-color: $pslibrary-1-0-0-US-background-color !important;
+}
+.gbrv {
+  background-color: $GBRV-1-2-US-background-color !important;
+}
+
+.gbrv14 {
+  background-color: $GBRV-1-4-US-background-color !important;
+}
+.gbrv15 {
+  background-color: $GBRV-1-5-US-background-color !important;
+}
+.ivca {
+  background-color: $THEOS-background-color !important;
+}
+.wentz {
+  background-color: $RE-Wentzcovitch-background-color !important;
+}
+.p100low {
+  background-color: $pslibrary-1-0-0-PAW-low-background-color !important;
+}
+.maltesachs {
+  background-color: $Actinides-MalteSachs-background-color !important;
+}
+.goedeck {
+  background-color: $Geodecker-background-color !important;
+}
+.oncv {
+  background-color: $SG-15-NC-background-color !important;
+}
+.oncv11 {
+  background-color: $SG-15-1-1-NC-background-color !important;
+}
+
+.dojo {
+  background-color: $Dojo-background-color !important;
+}
+
+.u031p100 {
+  background: linear-gradient(to right bottom, $pslibrary-0-3-1-US-background-color 50%, $pslibrary-1-0-0-PAW-background-color 50%);
+}
+
+.gbrvu100 {
+  background: linear-gradient(to right bottom, $GBRV-1-2-US-background-color 50%, $pslibrary-1-0-0-US-background-color 50%);
+}
+
+.gbrv14u100 {
+  background: linear-gradient(to right bottom, $GBRV-1-4-US-background-color 50%, $pslibrary-1-0-0-US-background-color 50%);
+}
+
+.gbrvp031 {
+  background: linear-gradient(to right bottom, $GBRV-1-2-US-background-color 50%, $pslibrary-0-3-1-PAW-background-color 50%);
+}
+.gbrv14oncv {
+  background: linear-gradient(to right bottom, $GBRV-1-4-US-background-color 50%, $SG-15-NC-background-color 50%);
+}
+.u031u100 {
+  background: linear-gradient(to right bottom, $pslibrary-0-3-1-US-background-color 50%, $pslibrary-1-0-0-US-background-color 50%);
+}
+
+.base-cell {
+  background-color: $base-cell-background-color !important;
+  border: none;
+}
+
+.base-cell .symbol {
+  color: #676363 !important;
+}
+
+.active-color {
+  background-color: #bbdceb !important;
+}
+
+.selected-color {
+  background-color: #eb834b !important;
+}
+
+.star-element {
+  background-color: transparent !important;
+}
+

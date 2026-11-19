@@ -1,0 +1,87 @@
+<div class="rest-url">
+    <a class="btn btn-primary btn-sm" target="_blank" ng-href="{{compoundsRestUrl}}">Get data from REST API</a>
+</div>
+
+<div class="page-description">
+    <span>
+        Validation results of an automated protocol for generating maximally-localized Wannier
+        functions in a high-throughput framework.
+    </span>
+</div>
+
+<div class="wrapper center-block panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-info">
+            <div class="panel-title" role="tab" id="citeContainer">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#citeWindow" aria-expanded="true" aria-controls="citeWindow">
+                    How to cite
+                </a>
+            </div>
+        </div>
+        <div id="citeWindow" class="panel-collapse collapse" role="tabpanel" aria-labelledby="citeContainer">
+            <div class="panel-body">
+                <div ng-include="'views/discover/scdm/cite.html'" class="window-container" autoscroll="false"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-info">
+            <div class="panel-title" role="tab" id="aboutContainer">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#aboutWindow" aria-expanded="false" aria-controls="aboutWindow">
+                    About Automated Wannierisation
+                </a>
+            </div>
+        </div>
+        <div id="aboutWindow" class="panel-collapse collapse" role="tabpanel" aria-labelledby="aboutContainer">
+            <div class="panel-body">
+                <div ng-include="'views/discover/scdm/about.html'" class="window-container" autoscroll="false"></div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-info">
+            <div class="panel-title" role="tab" id="ackContainer">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#ackWindow" aria-expanded="false" aria-controls="ackWindow">
+                    Acknowledgements
+                </a>
+            </div>
+        </div>
+        <div id="ackWindow" class="panel-collapse collapse" role="tabpanel" aria-labelledby="ackContainer">
+            <div class="panel-body">
+                <div ng-include="'views/discover/scdm/ack.html'" class="window-container" autoscroll="false"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="view-menu-container">
+    <nav class="view-nav" role="navigation">
+        <a ui-sref="main.discover.autowannier.dashboard.ptable"
+           class="view-nav-item"
+           ng-class="selectedView === 'ptableView'? 'selected' : ''"
+           ng-click="selectedView = 'ptableView'">
+            <img src="images/table_icon.png" class="view-icon" height="18">
+            Periodic table
+        </a>
+
+        <a ui-sref="main.discover.autowannier.dashboard.list"
+           class="view-nav-item"
+           ng-class="selectedView === 'listView'? 'selected' : ''"
+           ng-click="selectedView = 'listView'">
+            <img src="images/info_icon.png" class="view-icon" height="18">
+            List
+        </a>
+
+        <a ui-sref="main.discover.autowannier.dashboard.plot"
+           class="view-nav-item"
+           ng-class="selectedView === 'plotView'? 'selected' : ''"
+           ng-click="selectedView = 'plotView'">
+            <img src="images/scatterplot_icon.png" class="view-icon" height="18">
+            Plot
+        </a>
+    </nav>
+</div>
+
+<div ui-view="" style="margin-top: 50px;">
+
+</div>

@@ -1,0 +1,56 @@
+<div class="periodic-table-inner-container">
+
+    <div class="periodic-table-search-container">
+
+
+        <div class="periodic-table-inner-search-container">
+            <div class="input-group compound-search-input">
+                <input type="text" name="searchCompoundName" ng-model="searchCompoundName"
+                       value="{{searchCompoundName}}" ng-change="updateSearch()"
+                       class="form-control" placeholder="Search by name...">
+            </div>
+
+            <ul class="list-group" ng-if="displayAll">
+                <li class="list-group-item" ng-class="{ active : checkifActive(compound) }"
+                    ng-repeat="(compound, compoundHtml) in searchMatchingCompounds"
+                    ng-click="selectCompound(compound)">
+
+                    <span ng-bind-html="compoundHtml"></span>
+
+                </li>
+            </ul>
+
+            <ul class="list-group" ng-if="!displayAll">
+                <li class="list-group-item" ng-class="{ active : checkifActive(compound) }"
+                    ng-repeat="(compound, compoundHtml) in displayMatchingCompounds track by $index"
+                    ng-click="selectCompound(compound)">
+
+                    <span ng-bind-html="compoundHtml"></span>
+
+                </li>
+                <li class="list-group-item" ng-hide="limit>lenMatchingCompounds">
+                    <a ng-click="loadMore($index)">Load more...</a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+    <div class="periodic-table">
+
+        <div class="periodic">
+            <div ng-repeat="periodic_row in periodic_json track by $index" class="periodic-row">
+                <div ng-repeat="periodic_cell in periodic_row track by $index" class="cell"
+                     ng-click="elementSelected(periodic_cell)" ng-class="getCellClass(periodic_cell)">
+                    <div id="{{periodic_cell}}" class="element base-cell" ng-if="periodic_cell !== ''"
+                         ng-class="getElementClass(periodic_cell)">
+                        <div class="symbol">{{periodic_cell}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

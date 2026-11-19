@@ -1,0 +1,13 @@
+diff --git a/dist/main.js b/dist/main.js
+index 6d9e767bfecb07c932a2e3886991b73c7d06ef86..3ec844fe2a36ff81328a44921bb7a0e5ca321e12 100644
+--- a/dist/main.js
++++ b/dist/main.js
+@@ -12541,7 +12541,7 @@ class C extends HTMLElement {
+     });
+   }
+ }
+-customElements.define("periodic-table", C);
++customElements.get("periodic-table") || customElements.define("periodic-table", C); // patched: the app registers mc-periodic-table 0.2 too
+ const R = [
+   "",
+   "H",

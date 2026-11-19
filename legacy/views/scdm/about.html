@@ -1,0 +1,45 @@
+<div class="info-template">
+    <p>
+        This section contains the results from the validation of a procedure for automatically generating
+        maximally-localized Wannier functions in a high-throughput framework.
+        <br>
+        <br>
+        Maximally-localised  Wannier functions (MLWFs) are routinely used to compute from first-principles
+        advanced materials properties that require very dense Brillouin zone integration and to
+        build accurate tight-binding models for scale-bridging simulations. At the same time, high-throughput
+        (HT) computational materials design is an emergent field that promises to accelerate the reliable
+        and cost-effective design and optimisation of new materials with target properties.
+        The use of MLWFs in HT workflows has been hampered by the fact that generating MLWFs automatically
+        and robustly without any user intervention and for arbitrary materials is, in general, very
+        challenging. We address this problem directly by proposing a procedure for automatically
+        generating MLWFs for HT frameworks. Our approach is based on the selected columns of the
+        density matrix method and we present the details of its implementation in an AiiDA workflow.
+        We apply our approach to a dataset of 200 bulk crystalline materials that span a wide structural
+        and chemical space. We assess the quality of our MLWFs in terms of the accuracy of the band-structure
+        interpolation that they provide as compared to the band-structure obtained via full first-principles
+        calculations. Finally, we provide a downloadable
+        <a href="https://doi.org/10.24435/materialscloud:dd-nz" target="_blank">virtual machine</a>
+        that allows to reproduce the results of our paper, including all first-principles and atomistic
+        simulations as well as the computational workflows.
+
+    </p>
+    <p>
+        In this section, for all the materials we studied we provide:
+    <ul>
+        <li>optimised crystal structure (variable-cell relaxation)</li>
+        <li>electronic band structure obtained with Quantum ESPRESSO at the DFT-PBE level</li>
+        <li>interpolated band structure obtained with Wannier90</li>
+        <li>bands distance (&eta;, &eta;<sub>max</sub>) and total localization spread (&Omega;)</li>
+    <li>comparison between different linear k-point spacings (0.15,0.2,0.3,0.4 &#8491;<sup>-1</sup>)
+        and techniques (SCDM with/without MLWF, random projections with MLWF)</li>
+    </ul>
+    </p>
+    <p>
+        More details can be found in:
+        <br>
+        Valerio Vitale, Giovanni Pizzi, Antimo Marrazzo, Jonathan R. Yates, Nicola Marzari, Arash A. Mostofi,
+        npj Computational Materials 6, 66 (2020) doi:
+        <a href="http://doi.org/10.1038/s41524-020-0312-y" target="_blank">10.1038/s41524-020-0312-y</a>
+    </p>
+
+</div>
